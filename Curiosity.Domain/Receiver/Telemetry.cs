@@ -2,4 +2,4 @@ using System.Drawing;
 
 namespace Curiosity.Domain;
 
-public readonly record struct Telemetry(Size Plateau, Point Position, Direction Direction);
+public readonly record struct Telemetry(Size Plateau, Point Position, string Direction);

@@ -10,25 +10,6 @@ internal class Program
     {
         Program p = new Program();
         await p.Start();
-
-        // AnsiConsole.Prompt(
-        //     new TextPrompt<string>("Enter plateau size:")
-        //     .AddChoices(new[] { "5x5", "3x6", "10x10", "..." })
-        // );
-
-        // 5X5
-        // string plateau = Console.ReadLine();
-
-        // transmitter.Init(plateau);
-
-        // Console.WriteLine("OK");
-        // Console.WriteLine("Now, please input commands:");
-        // //FFRFLFLF
-        // string commands = Console.ReadLine();
-
-        // var telemetry = transmitter.Send(commands);
-
-        // Console.WriteLine($"{telemetry.Position.X}, {telemetry.Position.Y}, {telemetry.Direction}");
     }
 
     public async Task Start()
@@ -53,7 +34,7 @@ internal class Program
         transmitter.Init(plateau);
 
         // var telemetry = transmitter.Send("FFRFLFLF");
-        var telemetry = transmitter.Send("FFRFLFLF");
+        var telemetry = transmitter.Send(commands);
 
         // this.WriteProgress("FFRFLFLF");
         await this.WriteProgress(commands);
@@ -250,7 +231,7 @@ internal class Program
     {
         var size = new Size(telemetry.Plateau.Width, telemetry.Plateau.Height);
 
-        var createCell = (bool current, Direction dir) => {
+        var createCell = (bool current, string dir) => {
 
             var grid = new Grid().Centered();
             grid.AddColumn();
@@ -263,9 +244,9 @@ internal class Program
                 grid.AddRow(new string[]{"  ", "  ", "  "});
                 grid.AddRow(new string[]{" ", "  ", " "});
             } else {
-                grid.AddRow(new Text(" "), new Markup(dir == Direction.NORTH ? " :up_arrow:" : " "), new Text(" "));
-                grid.AddRow(new Markup(dir == Direction.WEST ? ":left_arrow:" : " "), new Markup(":robot:"), new Markup(dir == Direction.EAST ? ":right_arrow:" : " "));
-                grid.AddRow(new Text(" "), new Markup(dir == Direction.SOUTH ? " :down_arrow:" : " "), new Text(" "));
+                grid.AddRow(new Text(" "), new Markup(dir == "North" ? " :up_arrow:" : " "), new Text(" "));
+                grid.AddRow(new Markup(dir == "West" ? ":left_arrow:" : " "), new Markup(":robot:"), new Markup(dir == "East" ? ":right_arrow:" : " "));
+                grid.AddRow(new Text(" "), new Markup(dir == "South" ? " :down_arrow:" : " "), new Text(" "));
             }
 
             var p = new Panel(grid);

@@ -6,14 +6,14 @@ namespace Curiosity.Domain;
 public class Rover: IReceiver, ICommandReceiver
 {
     private Size plateau;
-    private Direction direction;
+    private IDirectionState direction;
     private Point position;
 
     private List<Telemetry> telemetry = new List<Telemetry>();
 
     public Rover()
     {
-        this.direction = Direction.NORTH;
+        this.direction = new NorthState();
         this.position = new Point(1, 1);
     }
 
@@ -26,10 +26,10 @@ public class Rover: IReceiver, ICommandReceiver
     {
         var delta = this.direction switch
         {
-            Direction.NORTH => new Point(0, 1 * units),
-            Direction.EAST => new Point(1 * units, 0),
-            Direction.SOUTH => new Point(0, -1 * units),
-            Direction.WEST => new Point(-1 * units, 0),
+            NorthState => new Point(0, 1 * units),
+            EastState => new Point(1 * units, 0),
+            SouthState => new Point(0, -1 * units),
+            WestState => new Point(-1 * units, 0),
             _ => new Point(0, 0)
         };
 
@@ -44,10 +44,7 @@ public class Rover: IReceiver, ICommandReceiver
 
     public void Turn(Orientation orientation)
     {
-        int directionsCount = Enum.GetValues<Direction>().Count();
-        int angle = (int)this.direction + (int)orientation;
-        int remainder = angle % directionsCount;
-        this.direction = (Direction)(remainder < 0 ? remainder + directionsCount : remainder);
+        this.direction = this.direction.Turn(orientation);
     }
 
     public void Execute(ICommand[] buffer)
@@ -58,14 +55,14 @@ public class Rover: IReceiver, ICommandReceiver
         foreach(ICommand command in buffer)
         {
             command.Execute(this);
-            this.telemetry.Add(new Telemetry(this.plateau, this.position, this.direction));
+            this.telemetry.Add(new Telemetry(this.plateau, this.position, this.direction.ToString()));
         }
     }
 
     public ReadOnlyCollection<Telemetry> State()
     {
         if (this.telemetry.Count == 0)
-            this.telemetry.Add(new Telemetry(this.plateau, this.position, this.direction));
+            this.telemetry.Add(new Telemetry(this.plateau, this.position, this.direction.ToString()));
 
         return this.telemetry.AsReadOnly();
     }

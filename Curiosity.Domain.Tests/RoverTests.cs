@@ -18,7 +18,7 @@ public class HoverTest
     [Fact]
     public void Should_have_correct_initial_state()
     {
-        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), Direction.NORTH) };
+        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), "North") };
 
         var sut = new Rover();
         sut.Init(new Size(1, 1));
@@ -28,11 +28,11 @@ public class HoverTest
     }
 
     [Theory]
-    [InlineData(1, Direction.EAST)]
-    [InlineData(2, Direction.SOUTH)]
-    [InlineData(3, Direction.WEST)]
-    [InlineData(4, Direction.NORTH)]
-    public void Should_face_after_turn_clockwise(int turns, Direction direction)
+    [InlineData(1, "East")]
+    [InlineData(2, "South")]
+    [InlineData(3, "West")]
+    [InlineData(4, "North")]
+    public void Should_face_after_turn_clockwise(int turns, string direction)
     {
         var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), direction) };
 
@@ -50,11 +50,11 @@ public class HoverTest
     }
 
     [Theory]
-    [InlineData(1, Direction.WEST)]
-    [InlineData(2, Direction.SOUTH)]
-    [InlineData(3, Direction.EAST)]
-    [InlineData(4, Direction.NORTH)]
-    public void Should_face_after_turn_Counterclockwise(int turns, Direction direction)
+    [InlineData(1, "West")]
+    [InlineData(2, "South")]
+    [InlineData(3, "East")]
+    [InlineData(4, "North")]
+    public void Should_face_after_turn_Counterclockwise(int turns, string direction)
     {
         var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), direction) };
 
@@ -72,8 +72,8 @@ public class HoverTest
     }
 
     [Theory]
-    [InlineData(new [] { Orientation.Clockwise, Orientation.Counterclockwise, Orientation.Clockwise }, Direction.EAST)]
-    public void Should_face_after_turn(Orientation[] orientations, Direction direction)
+    [InlineData(new [] { Orientation.Clockwise, Orientation.Counterclockwise, Orientation.Clockwise }, "East")]
+    public void Should_face_after_turn(Orientation[] orientations, string direction)
     {
         var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), direction) };
 
@@ -93,7 +93,7 @@ public class HoverTest
     [Fact]
     public void Should_throw_ArgumentOutOfRangeException_if_move_out_of_bounds_to_west()
     {
-        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), Direction.WEST) };
+        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), "West") };
 
         var sut = new Rover();
         sut.Init(new Size(1, 1));
@@ -109,7 +109,7 @@ public class HoverTest
     [Fact]
     public void Should_throw_ArgumentOutOfRangeException_if_move_out_of_bounds_to_south()
     {
-        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), Direction.SOUTH) };
+        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), "South") };
 
         var sut = new Rover();
         sut.Init(new Size(1, 1));
@@ -126,7 +126,7 @@ public class HoverTest
     [Fact]
     public void Should_throw_ArgumentOutOfRangeException_if_move_out_of_bounds_to_east()
     {
-        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), Direction.EAST) };
+        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), "East") };
 
         var sut = new Rover();
         sut.Init(new Size(1, 1));
@@ -142,7 +142,7 @@ public class HoverTest
     [Fact]
     public void Should_throw_ArgumentOutOfRangeException_if_move_out_of_bounds_to_north()
     {
-        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), Direction.NORTH) };
+        var expected = new Telemetry[] { new Telemetry(new Size(1, 1), new Point(1, 1), "North") };
 
         var sut = new Rover();
         sut.Init(new Size(1, 1));
